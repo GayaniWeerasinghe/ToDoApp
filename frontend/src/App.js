@@ -9,7 +9,7 @@ import TaskDetails from './components/TaskDetails';
 function App() {
   return (
      <Router>
-     <div>
+     <div className='bg'>
         <Navbar/>
         <Routes>
         <Route path="/get/:id" element = {<TaskDetails/>} />

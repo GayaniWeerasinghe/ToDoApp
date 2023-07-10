@@ -70,7 +70,7 @@ function AllTasks(){
     function taskDelete(id){
 
         axios.delete(`http://localhost:8070/todo/delete/${id}`).then(() =>{
-            alert('Are you confirm to delete student??');
+            alert('Are you confirm to delete task??');
             getTasks();
         }).catch((err) =>{
             alert(err);
@@ -126,6 +126,7 @@ function AllTasks(){
                     </tr>
                     </thead>
                     <tbody>
+                        
                        {tasks.map((task,index) => (
                             <tr key={task._id}>
                             <td>{index+1}</td>
@@ -144,8 +145,9 @@ function AllTasks(){
                         }
                     </tbody>
                 </table>
-                <button className="btn btn-success"><a href="/add" style={{textDecoration:'none',color:'white'}}>Add New Task</a></button>
+                <button className="btn btn-success"><a href="/add" style={{textDecoration:'none',color:'white'}}><i class="fa-sharp fa-solid fa-plus"></i>&nbsp;Add New Task</a></button>
             </div>
+
         </div>
     )
 }

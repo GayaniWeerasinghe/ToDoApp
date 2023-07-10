@@ -43,7 +43,7 @@ export default function TaskDetails(){
          )}
             </div>
             <div className="col-lg-5 mt-2 mb-2">
-                 <img src={girl} height='200px' width='200px'></img>
+                 <img src={girl} height='300px' width='400px'></img>
             </div>
             </div>
             <br></br>
