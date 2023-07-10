@@ -27,6 +27,8 @@ export default function TaskDetails(){
             <br></br>
             <h3 style={{color: "blue"}}>Task Details</h3>
             <br></br>
+            <br></br>
+            <br></br>
             <div className="row">
             <div className="col-lg-5 mt-2 mb-2">
             {console.log(task)}
