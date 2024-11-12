@@ -40,6 +40,8 @@ export default function TaskDetails(){
                    <h5 className="font semibold text=2xl">&nbsp;&nbsp;Time : {task.time}</h5>
                    <br></br>
                    <h5 className="font semibold text=2xl">&nbsp;&nbsp;Task : {task.task}</h5>
+                   <br></br>
+                   <h5 className="font semibold text=2xl">&nbsp;&nbsp;Status : {task.status}</h5>
                  </div>
                 </div>
          )}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import 'jspdf-autotable';
 import jsPDF from 'jspdf' //to generate pdf
@@ -7,6 +7,7 @@ import jsPDF from 'jspdf' //to generate pdf
 function AllTasks(){
 
     let navigate = useNavigate();
+    const location = useLocation();
     const [tasks,setTasks] = useState([]);
     const [searchText, setSearchText] = useState('');
 
@@ -27,6 +28,7 @@ function AllTasks(){
             "Day",
             "Time",
             "Task",
+            "Status"
           ],
         ];
     
@@ -34,6 +36,7 @@ function AllTasks(){
           elt.day,
           elt.time,
           elt.task,
+          elt.status
         ]);
     
         let content = {
@@ -50,17 +53,33 @@ function AllTasks(){
     //End of print PDF...
 
     useEffect(() => {
-          getTasks();
-    },[])
+        if (location.pathname === "/status/complete") {
+            getCompletedTasks();
+        } else if (location.pathname === "/status/incomplete") {
+            getIncompleteTasks();
+        } else {
+            getTasks();
+        }
+    }, [location.pathname]);
 
-    function getTasks(){
-        axios.get('http://localhost:8070/todo').then((res) =>{
-            setTasks(res.data)
-        }).catch((err) => {
-            alert(err);
-        }   
-    )}
+    const getTasks = () => {
+        axios.get('http://localhost:8070/todo/')
+            .then((res) => setTasks(res.data))
+            .catch((err) => alert(err));
+    };
 
+    const getCompletedTasks = () => {
+        axios.get('http://localhost:8070/todo/status/complete')
+            .then((res) => setTasks(res.data))
+            .catch((err) => alert(err));
+    };
+
+    const getIncompleteTasks = () => {
+        axios.get('http://localhost:8070/todo/status/incomplete')
+            .then((res) => setTasks(res.data))
+            .catch((err) => alert(err));
+    };
+    
     function taskUpdate(id){
         console.log(id);
         navigate(`/update/${id}`);
@@ -76,6 +95,14 @@ function AllTasks(){
             alert(err);
         })
     }
+
+    const taskStatus = (task) => {
+        const updatedStatus = task.status === "Completed" ? "Incomplete" : "Completed";
+        
+        axios.put(`http://localhost:8070/todo/update/${task._id}`, { status: updatedStatus })
+            .then(() => getTasks())
+            .catch((err) => alert(err));
+    };
 
     const handlesearchArea = value => {
         setSearchText(value);
@@ -122,6 +149,7 @@ function AllTasks(){
                         <th scope="col">Day</th>
                         <th scope="col">Time</th>
                         <th scope="col">Task</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
@@ -133,6 +161,14 @@ function AllTasks(){
                             <td>{task.day}</td>
                             <td>{task.time}</td>
                             <td>{task.task}</td>
+                            <td>
+                               <button
+                                onClick={() => taskStatus(task)}
+                                className={`btn ${task.status === "Completed" ? "btn-success" : "btn-secondary"}`}
+                                >
+                                    {task.status}
+                               </button>
+                            </td>
                             <td>
                             <a href={`/get/${task._id}`}><button type="submit" className="btn btn-primary" style={{color:'white'}}><i className="fas fa-eye"></i>&nbsp;View</button></a>
                             &nbsp;

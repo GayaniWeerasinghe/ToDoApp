@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState , useRef  } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
-function AddTask(){
+const AddTask = () => {
+    const divRef = useRef(null);
 
     //to navigate
     let navigate = useNavigate();
@@ -31,9 +34,11 @@ function AddTask(){
 
         <div className="container">
             <br></br>
+            
             <h3 style={{color: "blue"}}>Add New Task</h3>
-            <br></br>
-            <form onSubmit={sendData}>
+           <br></br>
+           <form onSubmit={sendData}>
+           <div ref={divRef}>
             <div className="mb-3">
                 <label for="day" className="form-label">Day</label>
                   <input type="text" className="form-control" id="day" placeholder="Enter Day" 
@@ -55,10 +60,12 @@ function AddTask(){
                     setTask(e.target.value);
                  }}/>
             </div>
+            </div>
             <button type="submit" className="btn btn-success"><i className="far fa-check-square"></i><a href="/"></a>&nbsp;Save</button>
             </form>
-        </div>
+              </div>
+        
     )
-}
+ }
 
 export default AddTask;

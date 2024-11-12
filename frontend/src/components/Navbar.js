@@ -11,7 +11,15 @@ function Header(){
                 <li className="nav-item">
                     <a className="nav-link active" aria-current="page" href="/" style={{color: "blue"}}>ToDo</a>
                 </li>
-               </ul>
+                </ul>
+                <ul className="navbar-nav ms-auto">
+                <li className="nav-item">
+                    <a className="nav-link active" aria-current="page" href="/status/complete" style={{color: "blue"}}>Completed Tasks</a>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link active" aria-current="page" href="/status/incomplete" style={{color: "blue"}}>Incomplete Tasks</a>
+                </li>
+                </ul>
             </div>
             </div>
             </nav>
